@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Ivy ♥</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --blue: #4A90D9;
+            --blue-dk: #2C6FAC;
+            --blue-lt: #A8CFEE;
+            --pink: #F7C5D0;
+            --pink-dk: #E8899A;
+            --cream: #FDF6F0;
+            --ink: #1A1A2E;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: url('bg.png');
+            color: var(--ink);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* CURSOR */
+        .cursor {
+            width: 40px;
+            height: 40px;
+            background-image: url('cursor.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        @media (hover: none) {
+            .cursor {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            background: rgba(253, 246, 240, 0.88);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(74, 144, 217, 0.08);
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            justify-self: start;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover {
+            color: var(--blue);
+        }
+
+        .nav-back svg {
+            transition: transform 0.2s;
+        }
+
+        .nav-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        .nav-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink);
+            justify-self: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            justify-self: end;
+        }
+
+        .nav-links a {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 1.5px;
+            background: var(--pink-dk);
+            transform: scaleX(0);
+            transition: transform 0.25s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* PAGE HERO */
+        .page-hero {
+            padding: 10rem 3rem 5rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--pink);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .page-hero-bg {
+            position: absolute;
+            top: -0.05em;
+            right: -0.03em;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(6rem, 22vw, 16rem);
+            color: rgba(255, 255, 255, 0.35);
+            line-height: 0.9;
+            pointer-events: none;
+            user-select: none;
+            text-align: right;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--blue-dk);
+            margin-bottom: 1.2rem;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(3rem, 7vw, 6rem);
+            line-height: 0.95;
+            letter-spacing: -0.03em;
+            color: var(--ink);
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-hero h1 em {
+            font-style: italic;
+            color: var(--blue);
+        }
+
+        .page-hero-sub {
+            margin-top: 1.5rem;
+            max-width: 480px;
+            font-size: 1rem;
+            line-height: 1.75;
+            opacity: 0.75;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-hero-count {
+            margin-top: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--blue-dk);
+            opacity: 0.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* MARQUEE */
+        .marquee-wrap {
+            background: var(--blue);
+            padding: 0.9rem 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 0;
+            animation: marquee 20s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--pink);
+            padding: 0 2.5rem;
+            white-space: nowrap;
+        }
+
+        .marquee-item .dot {
+            color: #fff;
+            margin-left: 2.5rem;
+        }
+
+        @keyframes marquee {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* PROJECTS LIST */
+        .projects-list {
+            padding: 0;
+        }
+
+        /* PROJECT ENTRY */
+        .project-entry {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 520px;
+            border-bottom: 1px solid rgba(74, 144, 217, 0.12);
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.75s ease, transform 0.75s ease;
+        }
+
+        .project-entry.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Alternating layout */
+        .project-entry:nth-child(even) .project-visual {
+            order: 2;
+        }
+
+        .project-entry:nth-child(even) .project-content {
+            order: 1;
+        }
+
+        .project-visual {
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .project-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+            transition: transform 0.6s ease;
+            filter: grayscale(15%) contrast(1.05);
+        }
+
+        .project-entry:hover .project-visual img {
+            transform: scale(1.03);
+        }
+
+        .project-visual-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(26, 26, 46, 0.3) 100%);
+            pointer-events: none;
+        }
+
+        .project-num {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 5rem;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.2);
+            pointer-events: none;
+        }
+
+        .project-live-badge {
+            position: absolute;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--blue);
+            color: #fff;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.4rem 0.9rem;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .project-live-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4FC3F7;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .project-entry:hover .project-live-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* No-image fallback */
+        .project-visual-fallback {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.25);
+            position: relative;
+        }
+
+        /* CONTENT SIDE */
+        .project-content {
+            padding: 4rem 3.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+            background: var(--cream);
+        }
+
+        .project-entry:nth-child(even) .project-content {
+            background: #fff;
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-type {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--blue-dk);
+            opacity: 0.7;
+        }
+
+        .project-year {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            color: var(--ink);
+            opacity: 0.4;
+        }
+
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            line-height: 1.05;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+        }
+
+        .project-title span {
+            position: relative;
+            display: inline;
+        }
+
+        .project-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--pink);
+            z-index: -1;
+            border-radius: 2px;
+        }
+
+        .project-desc {
+            font-size: 0.97rem;
+            line-height: 1.8;
+            color: var(--ink);
+            opacity: 0.78;
+            max-width: 440px;
+        }
+
+        /* Feature list */
+        .project-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+            margin-top: 0.25rem;
+        }
+
+        .project-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            font-size: 0.88rem;
+            color: var(--ink);
+            opacity: 0.8;
+            line-height: 1.5;
+        }
+
+        .project-features li::before {
+            content: '✦';
+            color: var(--pink-dk);
+            font-size: 0.7rem;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        /* Stack pills */
+        .project-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .stack-pill {
+            background: var(--cream);
+            border: 1.5px solid var(--blue-lt);
+            border-radius: 100px;
+            padding: 0.35rem 0.85rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--blue-dk);
+            letter-spacing: 0.05em;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .stack-pill:hover {
+            background: var(--pink);
+            border-color: var(--pink-dk);
+        }
+
+        .project-entry:nth-child(even) .stack-pill {
+            background: #f5f5f8;
+        }
+
+        /* Links */
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .link-primary {
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.8rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: background 0.2s, transform 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .link-primary:hover {
+            background: var(--blue-dk);
+            transform: translateY(-2px);
+        }
+
+        .link-ghost {
+            color: var(--ink);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-bottom: 1.5px solid var(--pink-dk);
+            padding-bottom: 2px;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .link-ghost:hover {
+            color: var(--blue);
+        }
+
+        /* COMING SOON card */
+        .project-entry.coming-soon .project-visual-fallback {
+            background: linear-gradient(135deg, var(--blue-lt) 0%, var(--pink) 100%);
+        }
+
+        .project-entry.coming-soon .project-content {
+            opacity: 0.65;
+        }
+
+        .coming-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--pink);
+            color: var(--ink);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.8rem;
+            border-radius: 100px;
+        }
+
+        /* DIVIDER */
+        .projects-divider {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem 3.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--blue-dk);
+            opacity: 0.45;
+        }
+
+        .projects-divider::before,
+        .projects-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--blue-lt);
+        }
+
+        /* CONTACT STRIP */
+        .contact-strip {
+            background: var(--blue);
+            padding: 5rem 3rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .contact-strip::before {
+            content: 'let\'s talk.';
+            position: absolute;
+            bottom: -0.15em;
+            right: -0.05em;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(4rem, 12vw, 11rem);
+            color: rgba(255, 255, 255, 0.07);
+            line-height: 1;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .contact-strip .section-label {
+            color: var(--pink);
+        }
+
+        .contact-strip h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            color: #fff;
+            line-height: 1.05;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-strip h2 em {
+            color: var(--pink);
+            font-style: italic;
+        }
+
+        .contact-strip p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.97rem;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            padding: 0.85rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .contact-link:hover {
+            background: var(--pink-dk);
+            border-color: var(--pink-dk);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--ink);
+            padding: 1.8rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        footer span {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        footer .footer-name {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--pink);
+            font-size: 1rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .project-entry {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .project-entry:nth-child(even) .project-visual {
+                order: 0;
+            }
+
+            .project-entry:nth-child(even) .project-content {
+                order: 1;
+            }
+
+            .project-visual {
+                min-height: 280px;
+            }
+
+            .project-visual-fallback {
+                min-height: 280px;
+            }
+
+            .project-content {
+                padding: 2.5rem 1.8rem;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-hero {
+                padding: 8rem 1.8rem 3.5rem;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .page-hero h1 {
+                font-size: 2.8rem;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .contact-strip {
+                padding: 3.5rem 1.5rem;
+            }
+        }
+
+        /* Fade-in animation */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(28px);
+            animation: fadeUp 0.75s ease forwards;
+        }
+
+        .fade-up:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .fade-up:nth-child(2) {
+            animation-delay: 0.25s;
+        }
+
+        .fade-up:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cursor" id="cursor"></div>
+
+    <nav>
+        <a href="index.html" class="nav-back">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+            </svg>
+            Back to Portfolio
+        </a>
+        <span class="nav-logo">ivy ✦ dev</span>
+        <ul class="nav-links">
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+            <li><a href="https://github.com/Adiba-Nasim" target="_blank">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <div class="page-hero">
+        <div class="page-hero-bg">Works.</div>
+        <p class="section-label fade-up">— Selected Projects</p>
+        <h1 class="fade-up">Things I've <em>built.</em></h1>
+        <p class="page-hero-sub fade-up">A curated collection of projects I've poured my heart into — from full-stack
+            apps to creative experiments. Each one taught me something new.</p>
+        <p class="page-hero-count fade-up">3 live · 1 in progress</p>
+    </div>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap" aria-hidden="true">
+        <div class="marquee-track">
+            <span class="marquee-item">Full-Stack Development <span class="dot">✦</span></span>
+            <span class="marquee-item">UI / UX Design <span class="dot">✦</span></span>
+            <span class="marquee-item">Live Projects <span class="dot">✦</span></span>
+            <span class="marquee-item">Vercel · Supabase <span class="dot">✦</span></span>
+            <span class="marquee-item">React · Node.js <span class="dot">✦</span></span>
+            <span class="marquee-item">Full-Stack Development <span class="dot">✦</span></span>
+            <span class="marquee-item">UI / UX Design <span class="dot">✦</span></span>
+            <span class="marquee-item">Live Projects <span class="dot">✦</span></span>
+            <span class="marquee-item">Vercel · Supabase <span class="dot">✦</span></span>
+            <span class="marquee-item">React · Node.js <span class="dot">✦</span></span>
+        </div>
+    </div>
+
+    <!-- PROJECT LIST -->
+    <div class="projects-list">
+
+        <!-- PROJECT 01: MyMovieMania -->
+        <div class="project-entry">
+            <div class="project-visual">
+                <img src="mm.png" alt="MyMovieMania" />
+                <div class="project-visual-overlay"></div>
+                <div class="project-num">01</div>
+                <div class="project-live-badge">Live ↗</div>
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="project-type">Film · Entertainment</span>
+                    <span class="project-year">2024</span>
+                </div>
+                <h2 class="project-title"><span>My Movie Mania</span></h2>
+                <p class="project-desc">
+                    A personal movie tracker that lets you keep a diary of everything you've watched, want to watch, or
+                    loved. Powered by the TMDB API for rich metadata — posters, cast, ratings, and more.
+                </p>
+                <ul class="project-features">
+                    <li>Track movies with personal diary entries and reviews</li>
+                    <li>Star-based rating system with watchlist management</li>
+                    <li>TMDB API integration for live metadata & posters</li>
+                    <li>MySQL backend with session-based auth</li>
+                </ul>
+                <div class="project-stack">
+                    <span class="stack-pill">AngularJS</span>
+                    <span class="stack-pill">TMDB API</span>
+                    <span class="stack-pill">MySQL</span>
+                    <span class="stack-pill">Node.js</span>
+                    <span class="stack-pill">Express</span>
+                    <span class="stack-pill">Vercel</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://MyMovieMania.vercel.app" target="_blank" class="link-primary">
+                        View Live ↗
+                    </a>
+                    <a href="https://github.com/Adiba-Nasim/MyMovieMania" target="_blank" class="link-ghost">
+                        Source Code →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="projects-divider">✦ &nbsp; next project &nbsp; ✦</div>
+
+        <!-- PROJECT 02: Mobile Reimbursement System -->
+        <div class="project-entry">
+            <div class="project-visual">
+                <img src="mrps.png" alt="Mobile Reimbursement System" />
+                <div class="project-visual-overlay"></div>
+                <div class="project-num">02</div>
+                <div class="project-live-badge">Live ↗</div>
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="project-type">Enterprise · Admin Tool</span>
+                    <span class="project-year">2024</span>
+                </div>
+                <h2 class="project-title"><span>Mobile Reimbursement System</span></h2>
+                <p class="project-desc">
+                    A clean, functional reimbursement portal designed for workplace use. Employees submit mobile bill
+                    requests through a simple form interface; admins get a dedicated panel to approve, reject, or manage
+                    access.
+                </p>
+                <ul class="project-features">
+                    <li>Employee form interface for submitting reimbursement requests</li>
+                    <li>Admin dashboard with approval / rejection controls</li>
+                    <li>Role-based access control via Supabase</li>
+                    <li>Real-time status updates for submitted requests</li>
+                </ul>
+                <div class="project-stack">
+                    <span class="stack-pill">HTML / CSS / JS</span>
+                    <span class="stack-pill">React</span>
+                    <span class="stack-pill">Supabase</span>
+                    <span class="stack-pill">Vercel</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://uisl-mrps.vercel.app" target="_blank" class="link-primary">
+                        View Live ↗
+                    </a>
+                    <a href="https://github.com/Adiba-Nasim/Mobile-Reimbursement-System" target="_blank"
+                        class="link-ghost">
+                        Source Code →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="projects-divider">✦ &nbsp; next project &nbsp; ✦</div>
+
+        <!-- PROJECT 03: Mothers Touch Tiffin -->
+        <div class="project-entry">
+            <div class="project-visual">
+                <img src="mtt.png" alt="MothersTouch Tiffin" />
+                <div class="project-visual-overlay"></div>
+                <div class="project-num">03</div>
+                <div class="project-live-badge">Live ↗</div>
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="project-type">Marketplace · Food Tech</span>
+                    <span class="project-year">2025</span>
+                </div>
+                <h2 class="project-title"><span>Mothers Touch Tiffin</span></h2>
+                <p class="project-desc">
+                    A hyper-local tiffin delivery platform that connects hungry customers with home cooks in the same
+                    area. Orders flow through a real-time pipeline — customer places order, cook prepares it, delivery
+                    partner picks it up.
+                </p>
+                <ul class="project-features">
+                    <li>Three-role system: customers, home cooks, delivery partners</li>
+                    <li>Real-time order tracking and status updates</li>
+                    <li>Area-based cook discovery and menu browsing</li>
+                    <li>Supabase-powered auth and live database sync</li>
+                </ul>
+                <div class="project-stack">
+                    <span class="stack-pill">HTML / CSS / JS</span>
+                    <span class="stack-pill">React</span>
+                    <span class="stack-pill">Supabase</span>
+                    <span class="stack-pill">Vercel</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://mothers-touch-tiffin.vercel.app" target="_blank" class="link-primary">
+                        View Live ↗
+                    </a>
+                    <a href="https://github.com/Adiba-Nasim/FUTURE_FS_03" target="_blank" class="link-ghost">
+                        Source Code →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="projects-divider">✦ &nbsp; up next &nbsp; ✦</div>
+
+        <!-- PROJECT 04: Coming Soon -->
+        <div class="project-entry coming-soon">
+            <div class="project-visual">
+                <div class="project-visual-fallback"
+                    style="background: linear-gradient(135deg, var(--blue-lt) 0%, var(--pink) 100%);">
+                    ✦
+                </div>
+                <div class="project-num" style="color: rgba(26,26,46,0.15);">04</div>
+            </div>
+            <div class="project-content">
+                <div class="project-meta">
+                    <span class="coming-badge">✦ In Progress</span>
+                </div>
+                <h2 class="project-title"><span>New Project</span></h2>
+                <p class="project-desc">
+                    Something new is brewing — a creative experiment that I'm not quite ready to share just yet. Stay
+                    tuned, it's going to be fun.
+                </p>
+                <ul class="project-features">
+                    <li>Currently in planning & design phase</li>
+                    <li>More details dropping soon on GitHub</li>
+                </ul>
+                <div class="project-stack">
+                    <span class="stack-pill">React</span>
+                    <span class="stack-pill">?</span>
+                    <span class="stack-pill">TBD</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Adiba-Nasim" target="_blank" class="link-ghost">
+                        Watch on GitHub →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CONTACT STRIP -->
+    <section class="contact-strip">
+        <p class="section-label">— Let's Connect</p>
+        <h2>Got an idea?<br>Let's <em>build it.</em></h2>
+        <p>Always open to new projects, collabs, or just a good chat about tech and aesthetics. Drop me a line!</p>
+        <div class="contact-links">
+            <a href="mailto:nasim.adiba02@gmail.com" class="contact-link">✉ Email Me</a>
+            <a href="https://www.linkedin.com/in/adiba-nasim-ivyyy02" target="_blank" rel="noopener noreferrer"
+                class="contact-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+                LinkedIn
+            </a>
+            <a href="https://github.com/Adiba-Nasim" target="_blank" class="contact-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <span class="footer-name">ivy.</span>
+        <span>Have Fun coding ♥ · 2025</span>
+    </footer>
+
+    <script>
+        // Cursor
+        const cursor = document.getElementById('cursor');
+        let mx = 0, my = 0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        function animCursor() { cursor.style.transform = `translate(${mx - 20}px, ${my - 20}px)`; requestAnimationFrame(animCursor); }
+        animCursor();
+
+        // Scroll reveal for project entries
+        const entries = document.querySelectorAll('.project-entry');
+        const obs = new IntersectionObserver((items) => {
+            items.forEach(item => {
+                if (item.isIntersecting) {
+                    item.target.classList.add('visible');
+                    obs.unobserve(item.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        entries.forEach(el => obs.observe(el));
+    </script>
+
+</body>
+
+</html>
