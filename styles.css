@@ -1096,87 +1096,6 @@ nav {
 }
 
 
-/* CONTACT */
-#contact {
-  background: var(--blue);
-  padding: 7rem 3rem;
-  position: relative;
-  overflow: hidden;
-}
-
-#contact::before {
-  content: 'let\'s talk.';
-  position: absolute;
-  bottom: -0.15em;
-  right: -0.05em;
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(5rem, 13vw, 13rem);
-  color: rgba(255, 255, 255, 0.07);
-  line-height: 1;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.contact-inner {
-  max-width: 640px;
-  position: relative;
-  z-index: 2;
-}
-
-.contact-inner .section-label {
-  color: var(--pink);
-}
-
-.contact-inner h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  color: #fff;
-  line-height: 1.05;
-  margin-bottom: 1.2rem;
-}
-
-.contact-inner h2 em {
-  color: var(--pink);
-  font-style: italic;
-}
-
-.contact-inner p {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.75);
-  margin-bottom: 2.5rem;
-  max-width: 400px;
-}
-
-.contact-links {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  border-radius: 2px;
-  padding: 0.85rem 1.5rem;
-  color: #fff;
-  text-decoration: none;
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: background 0.2s, border-color 0.2s;
-}
-
-.contact-link:hover {
-  background: var(--pink-dk);
-  border-color: var(--pink-dk);
-}
 
 /* FOOTER */
 footer {
@@ -1451,6 +1370,92 @@ footer .footer-name {
 .nav-drawer {
   display: flex;
 }
+
+        /* CONTACT STRIP */
+        .contact-strip {
+            background: var(--blue);
+            padding: 5rem 3rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .contact-strip::before {
+            content: 'let\'s talk.';
+            position: absolute;
+            bottom: -0.15em;
+            right: -0.05em;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(4rem, 12vw, 11rem);
+            color: rgba(255, 255, 255, 0.07);
+            line-height: 1;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .contact-strip .section-label {
+            color: var(--pink);
+        }
+
+        .contact-strip h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            color: #fff;
+            line-height: 1.05;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-strip h2 em {
+            color: var(--pink);
+            font-style: italic;
+        }
+
+        .contact-strip p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.97rem;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            padding: 0.85rem 1.5rem;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .contact-link:hover {
+            background: var(--pink-dk);
+            border-color: var(--pink-dk);
+        }
+        
 .contact-strip {
   display: grid;
   grid-template-columns: 1fr 1fr;
