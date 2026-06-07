@@ -8,895 +8,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet" />
-    <style>
-        :root {
-            --blue: #4A90D9;
-            --blue-dk: #2C6FAC;
-            --blue-lt: #A8CFEE;
-            --pink: #F7C5D0;
-            --pink-dk: #E8899A;
-            --cream: #FDF6F0;
-            --ink: #1A1A2E;
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: url('assets/bg.png');
-            color: var(--ink);
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* CURSOR */
-        .cursor {
-            width: 40px;
-            height: 40px;
-            background-image: url('assets/cursor.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            position: fixed;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        @media (hover: none) {
-            .cursor {
-                display: none;
-            }
-
-            body {
-                cursor: auto;
-            }
-        }
-
-        /* NAV */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            padding: 1.2rem 2.5rem;
-            background: rgba(253, 246, 240, 0.88);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(74, 144, 217, 0.08);
-        }
-
-        .nav-back {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ink);
-            text-decoration: none;
-            justify-self: start;
-            transition: color 0.2s;
-        }
-
-        .nav-back:hover {
-            color: var(--blue);
-        }
-
-        .nav-back svg {
-            transition: transform 0.2s;
-        }
-
-        .nav-back:hover svg {
-            transform: translateX(-3px);
-        }
-
-        .nav-logo {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--ink);
-            justify-self: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            justify-self: end;
-        }
-
-        .nav-links a {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ink);
-            text-decoration: none;
-            position: relative;
-            transition: color 0.2s;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            right: 0;
-            height: 1.5px;
-            background: var(--pink-dk);
-            transform: scaleX(0);
-            transition: transform 0.25s ease;
-        }
-
-        .nav-links a:hover::after {
-            transform: scaleX(1);
-        }
-
-        /* PAGE HERO */
-        .page-hero {
-            padding: 10rem 3rem 5rem;
-            position: relative;
-            overflow: hidden;
-            background: var(--pink);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .page-hero-bg {
-            position: absolute;
-            top: -0.05em;
-            right: -0.03em;
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: clamp(6rem, 22vw, 16rem);
-            color: rgba(255, 255, 255, 0.35);
-            line-height: 0.9;
-            pointer-events: none;
-            user-select: none;
-            text-align: right;
-        }
-
-        .section-label {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--blue-dk);
-            margin-bottom: 1.2rem;
-        }
-
-        .page-hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: clamp(3rem, 7vw, 6rem);
-            line-height: 0.95;
-            letter-spacing: -0.03em;
-            color: var(--ink);
-            position: relative;
-            z-index: 1;
-        }
-
-        .page-hero h1 em {
-            font-style: italic;
-            color: var(--blue);
-        }
-
-        .page-hero-sub {
-            margin-top: 1.5rem;
-            max-width: 480px;
-            font-size: 1rem;
-            line-height: 1.75;
-            opacity: 0.75;
-            position: relative;
-            z-index: 1;
-        }
-
-        .page-hero-count {
-            margin-top: 1.5rem;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.68rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--blue-dk);
-            opacity: 0.7;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* MARQUEE */
-        .marquee-wrap {
-            background: var(--blue);
-            padding: 0.9rem 0;
-            overflow: hidden;
-        }
-
-        .marquee-track {
-            display: flex;
-            gap: 0;
-            animation: marquee 20s linear infinite;
-            width: max-content;
-        }
-
-        .marquee-item {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.1rem;
-            color: var(--pink);
-            padding: 0 2.5rem;
-            white-space: nowrap;
-        }
-
-        .marquee-item .dot {
-            color: #fff;
-            margin-left: 2.5rem;
-        }
-
-        @keyframes marquee {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
-        }
-
-        /* PROJECTS LIST */
-        .projects-list {
-            padding: 0;
-        }
-
-        /* PROJECT ENTRY */
-        .project-entry {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: 280px;
-            border-bottom: 1px solid rgba(74, 144, 217, 0.12);
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.75s ease, transform 0.75s ease;
-        }
-
-        .project-entry.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Alternating layout */
-        .project-entry:nth-child(even) .project-visual {
-            order: 2;
-        }
-
-        .project-entry:nth-child(even) .project-content {
-            order: 1;
-        }
-
-        .project-visual {
-            position: relative;
-            overflow: hidden;
-            min-height: 280px;
-        }
-
-        .project-visual img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top;
-            display: block;
-            transition: transform 0.6s ease;
-            filter: grayscale(15%) contrast(1.05);
-        }
-
-        .project-entry:hover .project-visual img {
-            transform: scale(1.03);
-        }
-
-        .project-visual-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, transparent 60%, rgba(26, 26, 46, 0.3) 100%);
-            pointer-events: none;
-        }
-
-        .project-num {
-            position: absolute;
-            top: 1.5rem;
-            left: 1.5rem;
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: 5rem;
-            line-height: 1;
-            color: rgba(105, 211, 234, 0.511);
-            pointer-events: none;
-        }
-
-        .project-live-badge {
-            position: absolute;
-            bottom: 1.5rem;
-            right: 1.5rem;
-            background: var(--blue);
-            color: #fff;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.4rem 0.9rem;
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            opacity: 0;
-            transform: translateY(6px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .project-live-badge::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #4FC3F7;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.3;
-            }
-        }
-
-        .project-entry:hover .project-live-badge {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .project-visual-fallback {
-            width: 100%;
-            height: 100%;
-            min-height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: 6rem;
-            color: rgba(255, 255, 255, 0.25);
-            position: relative;
-        }
-
-        /* CONTENT SIDE */
-        .project-content {
-            padding: 4rem 3.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 1.5rem;
-            background: var(--cream);
-        }
-
-        .project-entry:nth-child(even) .project-content {
-            background: #fff;
-        }
-
-        .project-meta {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .project-type {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--blue-dk);
-            opacity: 0.7;
-        }
-
-        .project-year {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 0.1em;
-            color: var(--ink);
-            opacity: 0.4;
-        }
-
-        .project-title {
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            line-height: 1.05;
-            color: var(--ink);
-            letter-spacing: -0.02em;
-        }
-
-        .project-title span {
-            position: relative;
-            display: inline;
-        }
-
-        .project-title span::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: var(--pink);
-            z-index: -1;
-            border-radius: 2px;
-        }
-
-        .project-desc {
-            font-size: 0.97rem;
-            line-height: 1.8;
-            color: var(--ink);
-            opacity: 0.78;
-            max-width: 440px;
-        }
-
-        /* Feature list */
-        .project-features {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-            margin-top: 0.25rem;
-        }
-
-        .project-features li {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.7rem;
-            font-size: 0.88rem;
-            color: var(--ink);
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-
-        .project-features li::before {
-            content: '✦';
-            color: var(--pink-dk);
-            font-size: 0.7rem;
-            flex-shrink: 0;
-            margin-top: 0.25rem;
-        }
-
-        /* Stack pills */
-        .project-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.25rem;
-        }
-
-        .stack-pill {
-            background: var(--cream);
-            border: 1.5px solid var(--blue-lt);
-            border-radius: 100px;
-            padding: 0.35rem 0.85rem;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            color: var(--blue-dk);
-            letter-spacing: 0.05em;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .stack-pill:hover {
-            background: var(--pink);
-            border-color: var(--pink-dk);
-        }
-
-        .project-entry:nth-child(even) .stack-pill {
-            background: #f5f5f8;
-        }
-
-        /* Links */
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 0.5rem;
-        }
-
-        .link-primary {
-            background: var(--blue);
-            color: #fff;
-            border: none;
-            padding: 0.8rem 1.8rem;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-radius: 2px;
-            transition: background 0.2s, transform 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .link-primary:hover {
-            background: var(--blue-dk);
-            transform: translateY(-2px);
-        }
-
-        .link-ghost {
-            color: var(--ink);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-bottom: 1.5px solid var(--pink-dk);
-            padding-bottom: 2px;
-            transition: color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .link-ghost:hover {
-            color: var(--blue);
-        }
-
-        /* COMING SOON card */
-        .project-entry.coming-soon .project-visual-fallback {
-            background: linear-gradient(135deg, var(--blue-lt) 0%, var(--pink) 100%);
-        }
-
-        .project-entry.coming-soon .project-content {
-            opacity: 0.65;
-        }
-
-        .coming-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: var(--pink);
-            color: var(--ink);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            padding: 0.3rem 0.8rem;
-            border-radius: 100px;
-        }
-
-        /* DIVIDER */
-        .projects-divider {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding: 2rem 3.5rem;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--blue-dk);
-            opacity: 0.45;
-        }
-
-        .projects-divider::before,
-        .projects-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--blue-lt);
-        }
-
-        /* CONTACT STRIP */
-        .contact-strip {
-            background: var(--blue);
-            padding: 5rem 3rem;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .contact-strip::before {
-            content: 'let\'s talk.';
-            position: absolute;
-            bottom: -0.15em;
-            right: -0.05em;
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: clamp(4rem, 12vw, 11rem);
-            color: rgba(255, 255, 255, 0.07);
-            line-height: 1;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        .contact-strip .section-label {
-            color: var(--pink);
-        }
-
-        .contact-strip h2 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 900;
-            font-size: clamp(2.2rem, 5vw, 3.8rem);
-            color: #fff;
-            line-height: 1.05;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-strip h2 em {
-            color: var(--pink);
-            font-style: italic;
-        }
-
-        .contact-strip p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.97rem;
-            line-height: 1.75;
-            margin-bottom: 2rem;
-            max-width: 400px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 1;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            padding: 0.85rem 1.5rem;
-            color: #fff;
-            text-decoration: none;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            transition: background 0.2s, border-color 0.2s;
-        }
-
-        .contact-link:hover {
-            background: var(--pink-dk);
-            border-color: var(--pink-dk);
-        }
-
-        /* FOOTER */
-        footer {
-            background: var(--ink);
-            padding: 1.8rem 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        footer span {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.35);
-        }
-
-        footer .footer-name {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            color: var(--pink);
-            font-size: 1rem;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .project-entry {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-
-            .project-entry:nth-child(even) .project-visual {
-                order: 0;
-            }
-
-            .project-entry:nth-child(even) .project-content {
-                order: 1;
-            }
-
-            .project-visual {
-                min-height: 200px;
-            }
-
-            .project-visual-fallback {
-                min-height: 200px;
-            }
-
-            .project-content {
-                padding: 2.5rem 1.8rem;
-            }
-
-            nav {
-                padding: 1rem 1.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .page-hero {
-                padding: 8rem 1.8rem 3.5rem;
-            }
-        }
-
-        @media (max-width: 500px) {
-            .page-hero h1 {
-                font-size: 2.8rem;
-            }
-
-            footer {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .contact-strip {
-                padding: 3.5rem 1.5rem;
-            }
-        }
-
-        /* Fade-in animation */
-        .fade-up {
-            opacity: 0;
-            transform: translateY(28px);
-            animation: fadeUp 0.75s ease forwards;
-        }
-
-        .fade-up:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .fade-up:nth-child(2) {
-            animation-delay: 0.25s;
-        }
-
-        .fade-up:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .contact-strip {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 64px;
-            align-items: center;
-        }
-
-        .contact-form {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            padding: 32px 28px;
-        }
-
-        .form-title {
-            font-size: 11px;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.65);
-            margin-bottom: 20px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            font-size: 10px;
-            letter-spacing: 0.13em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #fff;
-            font-size: 13.5px;
-            padding: 10px 13px;
-            outline: none;
-            resize: none;
-            width: 100%;
-            transition: border-color 0.2s, background 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: rgba(249, 168, 184, 0.8);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .form-group textarea {
-            min-height: 90px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 13px;
-            background: #f9a8b8;
-            color: #2a4a72;
-            border: none;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s;
-        }
-
-        .submit-btn:hover {
-            background: #fbccd7;
-            transform: translateY(-1px);
-        }
-
-        @media (max-width: 720px) {
-            .contact-strip {
-                grid-template-columns: 1fr;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
     <script src="components/contact-strip.js" defer></script>
 </head>
 
@@ -913,7 +25,7 @@
             Back to Portfolio
         </a>
         <span class="nav-logo">A.N. ✦ dev</span>
-        <ul class="nav-links">
+        <ul class="nav-links right">
             <li><a href="index.html#about">About</a></li>
             <li><a href="index.html#contact">Contact</a></li>
             <li><a href="https://github.com/Adiba-Nasim" target="_blank">GitHub</a></li>
@@ -970,7 +82,7 @@
                 <ul class="project-features">
                     <li>Track movies with personal diary entries and reviews</li>
                     <li>Star-based rating system with watchlist management</li>
-                    <li>TMDB API integration for live metadata & posters</li>
+                    <li>TMDB API integration for live metadata &amp; posters</li>
                     <li>MySQL backend with session-based auth</li>
                 </ul>
                 <div class="project-stack">
@@ -982,12 +94,8 @@
                     <span class="stack-pill">Vercel</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://MyMovieMania.vercel.app" target="_blank" class="link-primary">
-                        View Live ↗
-                    </a>
-                    <a href="https://github.com/Adiba-Nasim/MyMovieMania" target="_blank" class="link-ghost">
-                        Source Code →
-                    </a>
+                    <a href="https://MyMovieMania.vercel.app" target="_blank" class="link-primary">View Live ↗</a>
+                    <a href="https://github.com/Adiba-Nasim/MyMovieMania" target="_blank" class="link-ghost">Source Code →</a>
                 </div>
             </div>
         </div>
@@ -1026,18 +134,14 @@
                     <span class="stack-pill">Vercel</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://uisl-mrps.vercel.app" target="_blank" class="link-primary">
-                        View Live ↗
-                    </a>
-                    <a href="https://github.com/Adiba-Nasim/Mobile-Reimbursement-System" target="_blank"
-                        class="link-ghost">
-                        Source Code →
-                    </a>
+                    <a href="https://uisl-mrps.vercel.app" target="_blank" class="link-primary">View Live ↗</a>
+                    <a href="https://github.com/Adiba-Nasim/Mobile-Reimbursement-System" target="_blank" class="link-ghost">Source Code →</a>
                 </div>
             </div>
         </div>
 
         <div class="projects-divider">✦ &nbsp; next project &nbsp; ✦</div>
+
         <!-- PROJECT 03: The Investigation -->
         <div class="project-entry">
             <div class="project-visual">
@@ -1071,14 +175,14 @@
                     <span class="stack-pill">Zustand</span>
                 </div>
                 <div class="project-links">
-                    <a href="#" target="_blank" class="link-primary">View Live ↗</a>
-                    <a href="https://github.com/Adiba-Nasim/The-Investigation" target="_blank" class="link-ghost">Source
-                        Code →</a>
+                    <a href="https://the-investigation.vercel.app" target="_blank" class="link-primary">View Live ↗</a>
+                    <a href="https://github.com/Adiba-Nasim/The-Investigation" target="_blank" class="link-ghost">Source Code →</a>
                 </div>
             </div>
         </div>
 
         <div class="projects-divider">✦ &nbsp; next project &nbsp; ✦</div>
+
         <!-- PROJECT 04: Whimoracle -->
         <div class="project-entry">
             <div class="project-visual">
@@ -1113,8 +217,7 @@
                 </div>
                 <div class="project-links">
                     <a href="https://whim-unravel.vercel.app" target="_blank" class="link-primary">View Live ↗</a>
-                    <a href="https://github.com/Adiba-Nasim/whim-unravel" target="_blank" class="link-ghost">Source Code
-                        →</a>
+                    <a href="https://github.com/Adiba-Nasim/whim-unravel" target="_blank" class="link-ghost">Source Code →</a>
                 </div>
             </div>
         </div>
@@ -1153,19 +256,15 @@
                     <span class="stack-pill">Vercel</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://mothers-touch-tiffin.vercel.app" target="_blank" class="link-primary">
-                        View Live ↗
-                    </a>
-                    <a href="https://github.com/Adiba-Nasim/Mothers-Touch-Tiffin" target="_blank" class="link-ghost">
-                        Source Code →
-                    </a>
+                    <a href="https://mothers-touch-tiffin.vercel.app" target="_blank" class="link-primary">View Live ↗</a>
+                    <a href="https://github.com/Adiba-Nasim/Mothers-Touch-Tiffin" target="_blank" class="link-ghost">Source Code →</a>
                 </div>
             </div>
         </div>
 
         <div class="projects-divider">✦ &nbsp; next project &nbsp; ✦</div>
 
-        <!-- PROJECT 06: Mothers Touch Tiffin- CRM -->
+        <!-- PROJECT 06: Mothers Touch Tiffin - CRM -->
         <div class="project-entry">
             <div class="project-visual">
                 <img src="assets/mtt-crm.png" alt="MothersTouch Tiffin- CRM" />
@@ -1178,17 +277,16 @@
                     <span class="project-type">CRM</span>
                     <span class="project-year">2026</span>
                 </div>
-                <h2 class="project-title"><span>Mothers Touch Tiffin- CRM</span></h2>
+                <h2 class="project-title"><span>Mothers Touch Tiffin — CRM</span></h2>
                 <p class="project-desc">
                     A full-stack Lead Management System built for Mother's Touch Tiffin, Jamshedpur. Designed to
-                    streamline customer inquiries and sales processes, this CRM features a lead listing dashboard,
-                    contact form, and status tracking. Built with React for the frontend and Supabase for backend
-                    services, it provides a seamless experience for managing leads and improving customer engagement.
+                    streamline customer inquiries and sales processes, featuring a lead listing dashboard, contact form,
+                    and status tracking.
                 </p>
                 <ul class="project-features">
                     <li>Lead Listing Table with search, filter by status/source, pagination</li>
-                    <li>Contact Form- Public form + embeddable HTML snippet</li>
-                    <li>Status Updates- new → contacted → qualified → converted → lost</li>
+                    <li>Contact Form — public form + embeddable HTML snippet</li>
+                    <li>Status Updates: new → contacted → qualified → converted → lost</li>
                     <li>Supabase-powered auth for ADMIN/s Access only</li>
                 </ul>
                 <div class="project-stack">
@@ -1198,12 +296,8 @@
                     <span class="stack-pill">Vercel</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://mtt-crm.vercel.app/login" target="_blank" class="link-primary">
-                        View Live ↗
-                    </a>
-                    <a href="https://github.com/Adiba-Nasim/Mtt-crm" target="_blank" class="link-ghost">
-                        Source Code →
-                    </a>
+                    <a href="https://mtt-crm.vercel.app/login" target="_blank" class="link-primary">View Live ↗</a>
+                    <a href="https://github.com/Adiba-Nasim/Mtt-crm" target="_blank" class="link-ghost">Source Code →</a>
                 </div>
             </div>
         </div>
@@ -1213,11 +307,8 @@
         <!-- PROJECT 07: Coming Soon -->
         <div class="project-entry coming-soon">
             <div class="project-visual">
-                <img src="assets/new.png" alt="New Project">
-                <div class="project-visual-fallback"
-                    style="background: linear-gradient(135deg, var(--blue-lt) 0%, var(--pink) 100%);">
-                    ✦
-                </div>
+                <img src="assets/new.png" alt="New Project" />
+                <div class="project-visual-overlay"></div>
                 <div class="project-num" style="color: rgba(105, 211, 234, 0.511);">07</div>
             </div>
             <div class="project-content">
@@ -1230,7 +321,7 @@
                     tuned, it's going to be fun.
                 </p>
                 <ul class="project-features">
-                    <li>Currently in planning & design phase</li>
+                    <li>Currently in planning &amp; design phase</li>
                     <li>More details dropping soon on GitHub</li>
                 </ul>
                 <div class="project-stack">
@@ -1239,17 +330,15 @@
                     <span class="stack-pill">TBD</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://github.com/Adiba-Nasim" target="_blank" class="link-ghost">
-                        Watch on GitHub →
-                    </a>
+                    <a href="https://github.com/Adiba-Nasim" target="_blank" class="link-ghost">Watch on GitHub →</a>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- CONTACT STRIP -->
-    <contact-strip></contact-strip>
+    <!-- CONTACT STRIP (web component — shared across all pages) -->
+    <contact-strip id="contact"></contact-strip>
 
     <footer>
         <span class="footer-name">ivy.</span>
@@ -1260,7 +349,10 @@
         const cursor = document.getElementById('cursor');
         let mx = 0, my = 0;
         document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-        function animCursor() { cursor.style.transform = `translate(${mx - 20}px, ${my - 20}px)`; requestAnimationFrame(animCursor); }
+        function animCursor() {
+            cursor.style.transform = `translate(${mx - 20}px, ${my - 20}px)`;
+            requestAnimationFrame(animCursor);
+        }
         animCursor();
 
         // Scroll reveal for project entries
